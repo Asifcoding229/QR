@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Creator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>QR Code Creator</h1>
+            <p>Generate QR codes for text, URLs, contact information, and more</p>
+        </header>
+        
+        <main>
+            <div class="input-section">
+                <div class="form-group">
+                    <label for="content-type">Content Type:</label>
+                    <select id="content-type">
+                        <option value="text">Text</option>
+                        <option value="url">URL</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone Number</option>
+                        <option value="sms">SMS</option>
+                        <option value="wifi">WiFi Network</option>
+                    </select>
+                </div>
+                
+                <!-- Text Input (Default) -->
+                <div class="input-fields" id="text-fields">
+                    <div class="form-group">
+                        <label for="text-input">Text:</label>
+                        <textarea id="text-input" placeholder="Enter your text here"></textarea>
+                    </div>
+                </div>
+                
+                <!-- URL Input -->
+                <div class="input-fields" id="url-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="url-input">URL:</label>
+                        <input type="url" id="url-input" placeholder="https://example.com">
+                    </div>
+                </div>
+                
+                <!-- Email Input -->
+                <div class="input-fields" id="email-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="email-address">Email Address:</label>
+                        <input type="email" id="email-address" placeholder="example@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="email-subject">Subject (optional):</label>
+                        <input type="text" id="email-subject" placeholder="Email subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="email-body">Body (optional):</label>
+                        <textarea id="email-body" placeholder="Email body text"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Phone Input -->
+                <div class="input-fields" id="phone-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="phone-input">Phone Number:</label>
+                        <input type="tel" id="phone-input" placeholder="+1234567890">
+                    </div>
+                </div>
+                
+                <!-- SMS Input -->
+                <div class="input-fields" id="sms-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="sms-number">Phone Number:</label>
+                        <input type="tel" id="sms-number" placeholder="+1234567890">
+                    </div>
+                    <div class="form-group">
+                        <label for="sms-message">Message:</label>
+                        <textarea id="sms-message" placeholder="Your SMS message"></textarea>
+                    </div>
+                </div>
+                
+                <!-- WiFi Input -->
+                <div class="input-fields" id="wifi-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="wifi-ssid">Network Name (SSID):</label>
+                        <input type="text" id="wifi-ssid" placeholder="Network name">
+                    </div>
+                    <div class="form-group">
+                        <label for="wifi-password">Password:</label>
+                        <input type="password" id="wifi-password" placeholder="Network password">
+                    </div>
+                    <div class="form-group">
+                        <label for="wifi-encryption">Encryption Type:</label>
+                        <select id="wifi-encryption">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">No Password</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wifi-hidden">Hidden Network:</label>
+                        <input type="checkbox" id="wifi-hidden">
+                    </div>
+                </div>
+                
+                <div class="qr-options">
+                    <div class="form-group">
+                        <label for="qr-size">QR Code Size:</label>
+                        <select id="qr-size">
+                            <option value="128">Small (128x128)</option>
+                            <option value="256" selected>Medium (256x256)</option>
+                            <option value="512">Large (512x512)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="error-correction">Error Correction:</label>
+                        <select id="error-correction">
+                            <option value="L">Low (7%)</option>
+                            <option value="M" selected>Medium (15%)</option>
+                            <option value="Q">Quartile (25%)</option>
+                            <option value="H">High (30%)</option>
+                        </select>
+                    </div>
+                    <div class="form-group color-picker">
+                        <label for="foreground-color">Foreground Color:</label>
+                        <input type="color" id="foreground-color" value="#000000">
+                    </div>
+                    <div class="form-group color-picker">
+                        <label for="background-color">Background Color:</label>
+                        <input type="color" id="background-color" value="#FFFFFF">
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button id="generate-btn" class="primary-btn">Generate QR Code</button>
+                    <button id="reset-btn" class="secondary-btn">Reset</button>
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <div class="qr-container">
+                    <div id="qr-code-display">
+                        <!-- QR code will be displayed here -->
+                        <div class="placeholder">
+                            <p>Your QR code will appear here</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="download-options">
+                    <button id="download-png-btn" class="download-btn" disabled>Download PNG</button>
+                    <button id="download-svg-btn" class="download-btn" disabled>Download SVG</button>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Created with ❤️ | <span id="current-year"></span></p>
+        </footer>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
